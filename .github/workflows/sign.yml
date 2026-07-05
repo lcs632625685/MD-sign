@@ -2,8 +2,7 @@ name: 美的家居自动签到
 
 on:
   schedule:
-    # 每天北京时间 8:00 执行
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'  # 每天北京时间8:00执行
   workflow_dispatch:  # 支持手动触发
 
 jobs:
@@ -25,8 +24,8 @@ jobs:
     
     - name: 执行签到
       env:
-        MIDEA_USERNAME: ${{ secrets.MIDEA_USERNAME }}
-        MIDEA_PASSWORD: ${{ secrets.MIDEA_PASSWORD }}
+        UC_ACCESS_TOKEN: ${{ secrets.UC_ACCESS_TOKEN }}
+        USER_KEY: ${{ secrets.USER_KEY }}
         SERVER_CHAN_KEY: ${{ secrets.SERVER_CHAN_KEY }}
       run: |
         python midea_sign.py
