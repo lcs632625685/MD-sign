@@ -2,30 +2,31 @@ name: 美的家居自动签到
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'  # 北京时间每天8点自动运行
   workflow_dispatch:
 
 jobs:
   sign:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: 检出代码
-      uses: actions/checkout@v3
-    
-    - name: 设置 Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    
-    - name: 安装依赖
-      run: |
-        pip install requests
-    
-    - name: 执行签到
-      env:
-        UC_ACCESS_TOKEN: ${{ secrets.UC_ACCESS_TOKEN }}
-        USER_KEY: ${{ secrets.USER_KEY }}
-        SERVER_CHAN_KEY: ${{ secrets.SERVER_CHAN_KEY }}
-      run: |
-        python midea_sign.py
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: |
+          pip install requests
+
+      - name: 执行签到
+        env:
+          UC_ACCESS_TOKEN: ${{ secrets.UC_ACCESS_TOKEN }}
+          USER_KEY: ${{ secrets.USER_KEY }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PUSHPLUS_TOPIC: ${{ secrets.PUSHPLUS_TOPIC }}
+        run: |
+          python midea_sign.py
